@@ -1,0 +1,28 @@
+#include<iostream>
+using namespace std;
+ void solve(){
+	int N;
+	cin>>N;
+	int M;
+	cin>>M;
+	int psum[N+2]={0};
+	while(M--){
+		int n;
+		int m;
+		cin>>n>>m;
+	
+		psum[n]++;
+		psum[m+1]--;
+}
+int mini=200005;
+for(int i=1;i<=N;i++){
+	psum[i]+=psum[i-1];
+	
+	mini=min(psum[i],mini);
+}
+
+
+cout<<mini;}
+int main(){
+	solve();
+}
