@@ -1,0 +1,53 @@
+#include<iostream>
+#include<queue>
+#include<set>
+#include<map>
+#include<vector>
+using namespace std;
+
+int main(){
+    int R;
+    cin>>R;
+    map<int,vector<pair<int,int>>> g;
+    while(R--){
+        int src,dest,dist;
+        cin>>src>>dest>>dist;
+        // In g[src], push (distance, destination)
+        g[src].push_back(make_pair(dist,dest));
+        g[dest].push_back(make_pair(dist,src));
+    }
+    
+    int st,end;
+    cin>>st>>end;
+    
+    priority_queue<pair<int,int>,vector<pair<int,int>>,greater<pair<int,int>>> pq;
+    pq.push(make_pair(0,st));
+    set<int> vis;
+    
+    while(!pq.empty()){
+        pair<int,int> top_element = pq.top();
+        int currdist = top_element.first;
+        int city = top_element.second;
+        pq.pop();
+        
+ 
+        if(vis.count(city) == 0){
+            vis.insert(city);
+            if(city==end){
+                cout<<currdist;
+                return 0;
+            }
+            
+            
+            for(size_t i = 0; i < g[city].size(); i++){
+                int ocd = g[city][i].first;   
+                int oc = g[city][i].second;   
+                
+                if(vis.count(oc) == 0){
+                    pq.push(make_pair(currdist+ocd,oc));
+                }
+            }
+        }
+    }
+    return 0;
+}
