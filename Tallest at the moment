@@ -1,0 +1,48 @@
+//tallest at the moment
+#include<iostream>
+#include<vector>
+#include<algorithm>
+using namespace std;
+int main(){
+	int N;
+	cin>>N;
+	vector<pair<int,int>> arr(N);
+	for(int i=0;i<N;i++){
+		int ht,lt;
+		cin>>ht>>lt;
+		arr[i]=make_pair(ht,lt);
+		
+	}
+	sort(arr.begin(),arr.end(),greater<>());
+	int prevt=0;
+	vector<int>ltarr,htarr;
+	/*for(auto[ht,lt]:arr){
+		if(lt>prevt){
+			prevt=lt;
+			ltarr.push_back(lt);
+			htarr.push_back(ht);
+			
+		}
+	}*/
+	for(int i=0;i<N;i++){
+		int ht=arr[i].first;
+		int lt=arr[i].second;
+		if(lt>prevt){
+			prevt=lt;
+			ltarr.push_back(lt);
+			htarr.push_back(ht);
+			
+		}
+		
+	}
+	int Q;
+	cin>>Q;
+	
+	while(Q--){
+	int min;
+	cin>>min;
+	auto it=upper_bound(ltarr.begin(),ltarr.end(),min);
+	int idx=it-ltarr.begin();
+	cout<<htarr[idx]<<endl;
+		
+	}}
