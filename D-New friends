@@ -1,0 +1,59 @@
+//D-New friends
+#include<iostream>
+#include<vector>
+using namespace std;
+ int find(vector<int>&ldr,int node){
+    if(ldr[node]!=node){
+        ldr[node]= find(ldr,ldr[node]);
+    }
+    return ldr[node];
+}
+
+ void join(vector<int> &ldr,int lt, int rt){
+        ldr[find(ldr,rt)]=find(ldr,lt);
+    }
+    
+int main(){
+	int N;
+	cin>>N;
+	int M;
+	cin>>M;
+	
+	vector<int> ldr(N+1);
+	for(int i=1;i<=N;i++){
+		ldr[i]=i;
+	}
+	vector<pair<int,int>> edges(M+1);
+	
+	for(int i=0;i<M;i++){
+		int a,b;
+		cin>>a>>b;
+		edges.push_back(make_pair(a,b));
+		join(ldr,a,b);
+		
+	}
+	
+vector<int>gcnt(N+1);
+vector<int>edcnt(N+1);
+
+
+
+for(int i=1;i<=N;i++){
+	gcnt[find(ldr,i)]++;
+}
+
+for(auto &edge:edges){
+	int a=edge.first;
+	int b=edge.second;
+	edcnt[find(ldr,a)]++;
+}
+long long ans=0;
+for(int i=1;i<=N;i++){
+	if(edcnt[i]!=0 && gcnt[i]!=0){
+	long long n=gcnt[i];
+	long long k=edcnt[i];
+	ans+=(n*(n-1))/2-(k);
+}
+}
+cout<<ans;
+}
