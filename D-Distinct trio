@@ -1,0 +1,27 @@
+//D-Distinct trio
+#include<iostream>
+#include<vector>
+#include<algorithm>
+using namespace std;
+int main(){
+	int N;
+	cin>>N;
+	vector<int>g(N);
+	for(int i=0;i<N;i++){
+		cin>>g[i];
+	}
+	sort(g.begin(),g.end());
+	long long int ans=0;
+	for(int i=0;i<N;i++){
+		int x=g[i];
+		auto it_1=upper_bound(g.begin(),g.end(),x);
+		auto it_2=lower_bound(g.begin(),g.end(),x);
+		
+		int higher=g.end()-it_1;
+		 int lower=it_2-g.begin();
+		 ans+=1LL*higher*lower;
+		
+		}
+	
+	cout<<ans<<endl;
+	}
