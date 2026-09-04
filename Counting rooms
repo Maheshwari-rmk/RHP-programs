@@ -1,0 +1,45 @@
+#include<iostream>
+#include<vector>
+using namespace std;
+void dfs(vector<vector<char>> &arr,int R, int C,int r, int c){
+		int diff[4][2]={{0,-1},{-1,0},{0,1},{1,0}};
+		arr[r][c]='#';
+		for(int i=0;i<4;i++){
+			int ar=r+diff[i][0];
+			int ac=c+diff[i][1];
+			if(ar>=0 && ar<R && ac>=0 && ac<C && arr[ar][ac]=='.'){
+				dfs(arr,R,C,ar,ac);
+			}
+		}
+		
+	}
+	
+void solve(){
+	int R;
+	cin>>R;
+	int C;
+	cin>>C;
+	vector<vector<char>> arr(R,vector<char>(C));
+	for(int row=0;row<R;row++){
+		for(int col=0;col<C;col++){
+		cin>>arr[row][col];
+	}
+	}
+	
+	
+	int count=0;
+	for(int row=0;row<R;row++){
+		for(int col=0;col<C;col++){
+			if(arr[row][col]=='.'){
+				count++;
+				dfs(arr,R,C,row,col);
+			}
+		}
+	}
+	cout<<count;
+	}
+
+int main(){
+	solve();
+}
+	
