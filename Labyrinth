@@ -1,0 +1,96 @@
+#include <iostream>
+#include <queue>
+#include <vector>
+#include <algorithm>
+
+using namespace std;
+
+// Direction arrays for L, U, R, D
+const int dr[] = {0, -1, 0, 1};
+const int dc[] = {-1, 0, 1, 0};
+const string dir = "LURD";
+
+// Reconstructs path from 'B' back to 'A', then reverses it
+string getPath(int br, int bc, const vector<string>& g, int start_r, int start_c) {
+    string ans = "";
+    // Trace back until we reach the starting coordinates of 'A'
+    while (br != start_r || bc != start_c) {
+        char ch = g[br][bc];
+        ans += ch;
+        if (ch == 'U') br++;      // Move opposite to undo the step
+        else if (ch == 'D') br--;
+        else if (ch == 'L') bc++;
+        else if (ch == 'R') bc--;
+    }
+    reverse(ans.begin(), ans.end());
+    return ans;
+}
+
+int main() {
+    // Fast I/O
+    ios_base::sync_with_stdio(false);
+    cin.tie(NULL);
+
+    int r, c;
+    if (!(cin >> r >> c)) return 0;
+
+    vector<string> g(r);
+    for (int row = 0; row < r; row++) {
+        cin >> g[row];
+    }
+
+    queue<pair<int, int>> q;
+    int start_r = -1, start_c = -1;
+    bool found_A = false;
+
+    // Fixed: Correctly break out of both loops when 'A' is found
+    for (int row = 0; row < r; row++) {
+        for (int col = 0; col < c; col++) {
+            if (g[row][col] == 'A') {
+                start_r = row;
+                start_c = col;
+                q.push({row, col});
+                found_A = true;
+                break;
+            }
+        }
+        if (found_A) break; 
+    }
+
+    int hops = -1;
+
+    while (!q.empty()) {
+        int qsize = q.size();
+        hops++; 
+
+        while (qsize--) {
+            pair<int, int> current = q.front(); 
+            q.pop();
+            int row = current.first;
+            int col = current.second;
+
+            for (int i = 0; i < 4; i++) {
+                int ar = row + dr[i];
+                int ac = col + dc[i];
+
+                // Bounds validation
+                if (ar >= 0 && ar < r && ac >= 0 && ac < c) {
+                    if (g[ar][ac] == '.') {
+                        g[ar][ac] = dir[i]; // Store step direction
+                        q.push({ar, ac});
+                    } 
+                    else if (g[ar][ac] == 'B') {
+                        g[ar][ac] = dir[i];
+                        cout << "YES\n";
+                        cout << hops + 1 << "\n";
+                        cout << getPath(ar, ac, g, start_r, start_c) << "\n";
+                        return 0;
+                    }
+                }
+            }
+        }
+    }
+
+    cout << "NO\n";
+    return 0;
+}
