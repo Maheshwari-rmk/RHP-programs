@@ -1,0 +1,41 @@
+//D-Outweigh
+#include<iostream>
+#include<vector>
+#include<algorithm>
+using namespace std;
+int main(){
+	int N;
+	cin>>N;
+	vector<int>tak(N);
+	for(int i=0;i<N;i++){
+		cin>>tak[i];
+		
+	}
+	vector<int>aok(N);
+	for(int i=0;i<N;i++){
+		cin>>aok[i];
+	}
+	long long int am=0,bm=0;
+	for(int i=0;i<N;i++){
+		if(tak[i]>aok[i]){
+			am+=tak[i]-aok[i];
+		}else{
+			bm+=aok[i]-tak[i];
+		}
+	}
+	if(am==0){
+		cout<<"NO"<<endl; return 0;
+	}
+	int awt=(bm/am)+2;
+	vector<int>arr(N,0);
+	for(int i=0;i<N;i++){
+		if(tak[i]<=aok[i]){
+			arr[i]=1;
+		}else{
+			arr[i]=awt;
+		}
+	}
+	cout<<"YES"<<endl;
+	for(int i=0;i<N;i++){
+		cout<<arr[i];
+	}}
