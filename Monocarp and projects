@@ -1,0 +1,19 @@
+//Monocarp and projects
+
+#include<iostream>
+#include<vector>
+using namespace std;
+int main(){
+	long long int x,y,k;
+cin>>x>>y>>k;
+long long int ans=0,ctr=0;
+while(ctr<k){
+	long long int rem=(y+ctr)%(x+ctr);
+	if(rem==y-x)break;
+	ans+=rem; ctr++;}
+	if(k>ctr){
+	ans+=(k-ctr)*(y-x);}
+
+cout<<ans<<endl;
+	
+}
