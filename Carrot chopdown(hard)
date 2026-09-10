@@ -1,0 +1,40 @@
+//carrot hard
+#include<iostream>
+#include<algorithm>
+#include<vector>
+using namespace std;
+int main(){
+	int N,M;
+	cin>>N>>M;
+	vector<int> cnt(M+1,0),psum(M+1,0);
+	for(int ctr=1;ctr<=N;ctr++){
+		int curr;
+		cin>>curr;
+		cnt[curr]++;
+	}
+	for(int cl=1;cl<=M;cl++){
+		psum[cl]=psum[cl-1]+cnt[cl];
+	}
+	vector<int> ans(M+1,0);
+	for(int cut=1;cut<=min(M,18);cut++){
+		long long int maxc=0;
+		for(int x=1;x<=M;x++){
+			long long int currc=0;
+		for(int mul=1;mul*x<=M;mul++){
+				int lt=mul*x,rt=lt+x-1;
+				currc+=min(mul,(1<< cut)-1)*(psum[rt]-psum[lt-1]);
+				
+			}
+			if((1LL<<cut*x<=M)){
+				currc+=cnt[(1LL<<cut)*x];
+				
+			}
+			maxc=max(maxc,currc);
+		}
+		ans[cut]=maxc;
+		
+	}
+	for(int cut=1;cut<=M;cut++){
+		cout<<ans[min(cut,18)]<<(cut==M?"\n":" ");
+	}
+}
