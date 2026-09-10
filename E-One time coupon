@@ -1,0 +1,35 @@
+//E-One time coupon
+#include<iostream>
+#include<vector>
+#include<algorithm>
+#include<tuple>
+using namespace std;
+int main(){
+	int N;
+	cin>>N;
+	vector<tuple<int,int,int>> vec;
+	for(int i=0;i<N;i++){
+		int first,second;
+		cin>>first>>second;
+		int diff=first-second;
+		vec.push_back(make_tuple(diff,first,second));
+		
+	}
+	 sort(vec.begin(),vec.end());
+	 int sum=0;
+	 for( int i=0;i<N/2;i++){
+	 	sum+=get<1>(vec[i]);
+	 }
+	 for( int i=N/2;i<N;i++){
+	 	sum+=get<2>(vec[i]);
+	 }
+	 if(N%2==1){
+	 	int minA=get<1>(vec[0]);
+	 	for(int i=1;i<N;i++){
+	 		minA=min(minA,get<1>(vec[i]));
+	 	}
+	 	sum+=minA;
+	 }
+	 cout<<sum<<endl;
+	 return 0;
+	 }
